@@ -105,7 +105,8 @@ GitHub
 
                         A feature of online git services like Github that allow pull requests to suggest changes to a project, recieve suggested changes to your own projects, and address issues in pull requests.
 
-                        git pull
+                                Demonstration: I went to my Github account of Hulkman125 and went to my repository of ceg3120-Harvey. While there I clicked on my README.md file. I then clicked on the "Edit File" button on the top right to allow myself to edit it. at the top of my file I moved the text down 2 lines then at the top I typed down " #Example for pull requests tutorial". I then clicked on my commit changes which opens up the propose changes dialog box. At the bottom I then selected the option that says "Create a new branch for this commit and start a pull request".I then clicked on the "propose changes" button, then I typed down the commit "Example for pull requests tutorial" before I pressed the commit button. I then clicked on the pull request tab at the top of the page. You will be able to see the pull request I made for my README.md file.
+                        
 
 •	        SSH authentication to repositories
 
