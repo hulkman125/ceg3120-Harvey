@@ -1,6 +1,7 @@
 PART 1 Build a VPC
 
     1. A VPC (or virtual private cloud) is a collection of shared resources such as a subnet, an internet gateway, a route table, etc, that is allocated within a public cloud environment, which will give the user a certain level of isolation from one VPC user and all the other users who use the same cloud.
+
    
     ![alt text](VPC.png)
 
