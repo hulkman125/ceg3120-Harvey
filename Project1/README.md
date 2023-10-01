@@ -25,12 +25,12 @@ PART 1 Build a VPC
 
 PART 2 EC2 instances
 
-    1. 
-        a) I went with the AMI of ubuntu
-        b) The username of the instance type is also Ubuntu
-        c) Instance type ist2.micro
-        d) My key pair name is Harvey-keyPair
-        e) I need my key pair to be able to login to my new instance, it will have for itself a public key which will act as a lock to a door. So when I use my private key that I downloaded named Harvey-keyPair.pem whicj is located at a filepath of Linux/Ubuntu/home/hulkman125/ , i will be able to have access to my instance.
+        1. 
+            a) I went with the AMI of ubuntu
+            b) The username of the instance type is also Ubuntu
+            c) Instance type ist2.micro
+            d) My key pair name is Harvey-keyPair
+            e) I need my key pair to be able to login to my new instance, it will have for itself a public key which will act as a lock to a door. So when I use my private key that I downloaded named Harvey-keyPair.pem whicj is located at a filepath of Linux/Ubuntu/home/hulkman125/ , i will be able to have access to my instance.
     
     ![alt text](Instance_and_AMI.png)
     ![alt text](Instance_type.png)
