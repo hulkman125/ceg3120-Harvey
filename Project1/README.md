@@ -24,6 +24,7 @@ PART 1 Build a VPC
     ![alt text](key_pair_location.png)
 
 PART 2 EC2 instances
+
     1. 
         a) I went with the AMI of ubuntu
         b) The username of the instance type is also Ubuntu
