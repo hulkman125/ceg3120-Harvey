@@ -1,6 +1,7 @@
 PART 1 Build a VPC
 
     1. A VPC (or virtual private cloud) is a collection of shared resources such as a subnet, an internet gateway, a route table, etc, that is allocated within a public cloud environment, which will give the user a certain level of isolation from one VPC user and all the other users who use the same cloud.
+   
     ![alt text](VPC.png)
 
     2. A subnet is a set of divided IP addresses in an Ip network. When I added the /24 CIDR block to my subnet, it uses the first 3 octets. But when you add a /23 CIDR block to the VPC, it leaves behind exactly 1 bit left. so if you do not include the IP addresses in the subnet you are left with an IP range of 172.18.1.0 to 172.18.1.255.
