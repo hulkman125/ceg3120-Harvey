@@ -3,6 +3,7 @@
     My VPC contains many resources inside of it such as a route that will only work if a route table is installed onto my VPC. The purpose of the route is for you to create all of your AWS resources. This gives you the ability to dynamically route all incoming data to any other AWS services based on the content of the incoming request.
 
     the properties of my route include:
+    
         -RouteTableId: !Ref RouteTable
         -DestinationCidrBlock: 0.0.0.0/0
         -GatewayId: !Ref InternetGateway
@@ -10,24 +11,28 @@
 2. My VPC also contains a Subnet Route Table Association which is supposed to associate a subnet along with a route table.
 
     The properties of my Subnet Route Table Association includes:
+
         -SubnetId: !REF Subnet
         -RouteTableId: !Ref RouteTable
 
 3. My VPC also contains a Ubuntu Ip address resource which holds the private Ip address for the instance I made which I will explain later.
 
     The properties of my Ubuntu Ip address incclude:
+
         -Domain vpc
         -InstanceId: !Ref PublicUbuntuInstance
 
 4. My VPC also contains an Attach Gateway resource which has a funtion to allow connectivity to flow between the internet and your VPC
 
     The properties of my Attach Gateway include:
+
         -VpcId: !Ref VPC
         -InternetGatewayId: !Ref InternetGateway
 
 5. My VPC also contains an internet gateway resource which has mainly the same function as an Attach Gateway, to allow connectivity to flow between the internet and your VPC
 
     The properties of my internet gateway include:
+
         -Tags:
             -Key: Application
             Value: !Ref 'AWS::StackId'
@@ -84,3 +89,5 @@ Written by:
 Tyler
 R.
 Harvey
+
+
