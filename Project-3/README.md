@@ -32,10 +32,10 @@
 
 5. 
     This is the image for the first server(with my own personal css style):
-        ![alt text](Server1.PNG)
+        ![alt text](Server1.png)
 
     This is the second Server image:
-        ![alt text](Server2.PNG)
+        ![alt text](Server2.png)
 
     This is the third:
-        ![alt text](Server3.PNG)
+        ![alt text](Server3.png)
