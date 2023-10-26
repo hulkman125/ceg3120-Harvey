@@ -27,7 +27,7 @@
     a) the files on each host instance are the index.html file.
     b)the configurations I made were just to display the proper web page for each host instance, such as the 1st host instance will display "this is server 1", etc, etc.
     c)/var/www/html/index.html
-    d)"udo systemctl restart apache2" is the command to restart apache2
+    d)"sudo systemctl restart apache2" is the command to restart apache2
     e)the resources were from my notes again
 
 5. 
