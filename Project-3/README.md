@@ -30,3 +30,18 @@
 
     This is the third:
         ![alt text](Server3.png)
+
+
+
+
+Extra credit part.
+      1. HTTPs is basically the same as HTTP except it is far more secure. HTTPS uses TLS/SSL to encryp normal HTTP code and make it safer for traveling over the internet so even if a hacker hacks into the datastream and downloads the data it is perfectly encryped and without the private key to decryped the data, it will be useless to them.
+
+      2. image to show the new haproxy.cfg :
+         ![alt text](Server3.png)
+
+      3. 
+
+      4. I just altered the security groups to accept any ip address range if the port is 443, or if its an https protocal.
+
+      5.
