@@ -9,28 +9,19 @@
 3. when I went on my wsl I ssh'd into my proxy server, then I typed down sudo vim /etc/haproxy/haproxy.cfg
     a) I had made the neccessary modification in the file path of /etc/haproxy/haproxy.cfg.
     b)following the configurations:
-            frontend index.srv1.html
-                bind *:80
-                mode http
-                
-                default_backend webservers
-
-            backend webservers
-                balance roundrobin
-                server server1 192.168.1.101:80
-                server server2 192.168.1.102:80
-                server server3 192.168.1.103:80
+         ![alt text](config.png)
+            
     c) "systemctl restart haproxy" is the command to restart the haproxy.
     d) the resources were my notes from class.
 
-4. 
+5. 
     a) the files on each host instance are the index.html file.
     b)the configurations I made were just to display the proper web page for each host instance, such as the 1st host instance will display "this is server 1", etc, etc.
     c)/var/www/html/index.html
     d)"sudo systemctl restart apache2" is the command to restart apache2
     e)the resources were from my notes again
 
-5. 
+6. 
     This is the image for the first server(with my own personal css style):
         ![alt text](Server1.png)
 
