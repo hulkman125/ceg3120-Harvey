@@ -1,4 +1,4 @@
-1. The goal of the project is to create 3 host instances and a proxy instance that is supposed to be a hub for the client, when the client tries to access the proxy instance they will emediatly be redirected to 1 of th other host instances randomly, the client will then see whatever html code that is on that host instance.
+1. The goal of the project is to create 3 host instances and a proxy instance that is supposed to be a hub for the client, when the client tries to access the proxy instance they will emediatly be redirected to 1 of the other host instances in sequence, the client will then see whatever html code that is on that host instance.
 
 2. a) sudo vim /etc/hosts
    b) The host file is mainly a text file that is used by Windows to help directed IP addresses to host names/ domain names. In other words this file acts like a DNS service for your PC. It overrides the mappings from the DNS server that your personal computer is currently connected to.
