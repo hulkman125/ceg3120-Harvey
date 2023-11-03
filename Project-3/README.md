@@ -42,7 +42,7 @@ Extra credit part:
       ![alt text](https.png)
 
    3. this is the code I made to make apache2 handle https:
-      ![alt text](ssl.png)
+      ![alt text](ssl_image.png)
 
    5. I just altered the security groups to accept any ip address range if the port is 443, or if its an https protocal.
 
