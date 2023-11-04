@@ -15,7 +15,7 @@
     b)following the configurations:
          ![alt text](config.png)
             
-    c) "systemctl restart haproxy" is the command to restart the haproxy.
+    c) "sudo systemctl restart haproxy.service" is the command to restart the haproxy.
    
     d) the resources were my notes from class.
 
@@ -26,7 +26,7 @@
    
     c)/var/www/html/index.html
    
-    d)"sudo systemctl restart apache2" is the command to restart apache2
+    d)"sudo systemctl restart apache2.service" is the command to restart apache2
    
     e)the resources were from my notes again
 
