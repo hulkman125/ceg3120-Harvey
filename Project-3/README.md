@@ -24,7 +24,7 @@
    
     b)the configurations I made were just to display the proper web page for each host instance, such as the 1st host instance will display "this is server 1", server 2 will display "this is server 2", and the third server will display "this is server 3".
    
-    c)/var/www/html/index.html
+    c)/var/www/html/index.html on each host instance
    
     d)"sudo systemctl restart apache2.service" is the command to restart apache2
    
