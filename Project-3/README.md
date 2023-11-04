@@ -17,7 +17,7 @@
             
     c) "sudo systemctl restart haproxy.service" is the command to restart the haproxy.
    
-    d) https://www.haproxy.com/blog/the-four-essential-sections-of-an-haproxy-configuration
+    d) https://www.haproxy.com/blog/the-four-essential-sections-of-an-haproxy-configuration // this shows how I can go into and edit my haproxy.cfg file.
 
 6. 
     a) the files on each host instance are the index.html file.
