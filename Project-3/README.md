@@ -17,7 +17,7 @@
             
     c) "sudo systemctl restart haproxy.service" is the command to restart the haproxy.
    
-    d) the resources were my notes from class.
+    d) https://www.haproxy.com/blog/the-four-essential-sections-of-an-haproxy-configuration
 
 6. 
     a) the files on each host instance are the index.html file.
@@ -28,7 +28,7 @@
    
     d)"sudo systemctl restart apache2.service" is the command to restart apache2
    
-    e)the resources were from my notes again
+    e)[https://stackoverflow.com/questions/56151917/how-to-fix-apache2-debian-default-page-instead-of-my-site#:~:text=Hit%20in%20the%20browser%20bar%20the%20url%20that,possible%20to%20change%20the%20root%20page%20to%20yours.](https://www.youtube.com/watch?v=k87iYjZaezU) // this shows where the the index.html file is so I can change it
 
 8. 
     This is the image for the first server(with my own personal css style):
