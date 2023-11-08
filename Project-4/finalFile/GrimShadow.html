@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>	
+<title>INDEX</title>
+<meta charset="utf-8">
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<style>
+header { color: #046534;
+		 font-size: 100px;		
+		 font-family: dragonbones BB;}
+		   
+nav { text-align: center;
+      font-size: 20px;
+	  
+	   }
+	   
+a { text-decoration: none ; 
+     color: #000000;
+	 border: 3px solid #CCCCCC;
+	 background-color: #dfec17;
+	 padding: 3px;}
+nav ul { list-style-type: none;
+         padding-left: none;
+		 }
+.floatleft { float: right;}
+
+.divA { padding-left: 40px;
+        padding-right: 40px;}
+
+.divB { font-size: 70px;
+        font-family: OneTwoPunch BB;
+		color: #a52022 }
+p { font-size: 20px; }
+body { background-color: #f59684; }
+
+
+@media only screen and (max-width: 1024px){
+
+	nav { font-size: 10px;}
+
+	header {font-size: 50px;}
+	
+	a {border: 1px solid #CCCCCC;
+	   padding: 1px;}
+	
+	img {hieght: 100px;
+	     width: auto;
+		 display: none;}
+
+}
+
+</style>
+
+<script>
+
+	
+$(document).ready(function() {	
+	
+	$("#imge").hover(function(evt) {
+	
+		$("#imge").slideUp(1000).slideDown(1000);
+		evt.preventDefault();
+	});
+	
+	
+
+});
+</script>
+
+</head>
+<body>
+<header><center>Grim Shadow<center></header><br>
+
+<nav>
+	
+		<a href="index.html">Home</a> &nbsp;
+		<a href="GrimShadow.html">Grim Shadow</a> &nbsp; 
+		<a href="Monkey.html">Monkey Fighter</a> &nbsp; 
+		<a href="TerrorBunny.html">Terror Bunny</a> &nbsp; 
+		<a href="creator.html">Comics Creator</a> &nbsp;
+		<a href="ComicsSoFar.html">MY Work</a> &nbsp;
+		<a href="ContactInfo.html">Contact Information</a> &nbsp; 
+
+</nav><br>
+<main>
+<img class="floatleft" alt="GrimShadow" id="imge" border="7px solid #ce1e22" src="GS.jpg" height="600px" width=auto>
+<div class="divA">
+<h2>Grim Shadow</h2><br>
+<blockquote><p>The grim Shadow was a teenage boy named Gary Oscars who had his family destroyed by the mob who forced him to being sent to the orphanage.
+During a trip to the science lab he gets infected with chemicals that gave him super human agility.
+Using his new powers he uses them to fight crime and to avenge the loss of his family.</p></blockquote>
+</div>
+</main>
+<footer></footer>
+</body>
+</html>
+
+

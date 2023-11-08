@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Contact Information</title>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="SCRIPT.js"></script>
+<meta charset="utf-8">
+<style>
+
+body { background-color: #f25151;
+       font-family: Back Issues BB;}
+
+.f1 { background-color: #f8d309;}
+
+.f2 { background-color: #94e1f1;}
+
+nav { text-align: center;
+      font-size: 20px;
+	  font-family: OneTwoPunch BB;
+	  
+	  
+	   }
+	   
+a { color: #ede017;}
+</style>
+
+</head>
+<body>
+
+<header></header>
+
+<nav>
+		<a href="index.html">Home</a> &nbsp;
+		<a href="GrimShadow.html">Grim Shadow</a> &nbsp; 
+		<a href="Monkey.html">Monkey Fighter</a> &nbsp; 
+		<a href="TerrorBunny.html">Terror Bunny</a> &nbsp; 
+		<a href="creator.html">Comics Creator</a> &nbsp;
+		<a href="ComicsSoFar.html">MY Work</a> &nbsp;
+		<a href="ContactInfo.html">Contact Information</a> &nbsp; 
+</nav>
+<br>
+<h3><p>Here you can input your information for us to obtain along with the comments you would like to give us to help support our business.</p></h3>
+
+<form id="email_form" name="email_form" action="join.php" method="get">
+<fieldset class="f1">
+
+	<h4>First &amp; Last Name</h4>
+	
+	<label for="first_name_label">First Name: </label>
+		<input type="text" id="first_name_input" name="first_name" >
+		<span>&nbsp;</span><br><br>
+	
+	<label for="last_name_label">Last Name: </label>
+		<input type="text" id="last_name_input" name="last_name" >
+		<span>&nbsp;</span><br><br>
+
+</fieldset>
+<br><br>
+<fieldset class="f2">
+
+	<h4>Contact Information</h4>
+	<label for="ENTER_EMAIL">Enter below your email address for us to use</label><br><br>
+	<label for="email_address_label">Email Address: </label>
+		<input type="email" id="email_address_input" name="email_adress" autofocus >
+		<span>&nbsp;</span><br><br>
+	
+	
+	<label for="ENTER_PH_NUMBER">Enter below your phone Number for us to use</label><br><br>
+	<label for="phone_number_label">Phone Number: </label>
+		<input type="tel" id="phone_number_input" name="phone_number" placeholder="999-999-9999"  pattern="\d{3}[\-]\d[3][\-]\d{4}" title="Must be 999-999-9999">
+		<span>&nbsp;</span><br><br>
+
+</fieldset>
+<br><br>
+<fieldset class="f1">
+	
+	<h4>Comment Info</h4>
+	
+	<label for="LABEL_FOR_PN">Please let us know if your comment is a good one or a bad one</label><br>
+		<input type="radio" name="GoodBad" id="POSITIVE" value="Positive" checked="checked"> Positive Comment
+		<input type="radio" name="GoodBad" id="NEGATIVE" value="negative"> Negative Comment<br><br>
+	
+	
+	<label>Enter your comments below to help our company grow</label><br><br>
+		<textarea name="comment" id="comment" rows="5" cols="40" ></textarea>
+	<span id="COM" >&nbsp;</span><br>
+	
+</fieldset>	
+<br><br>
+<fieldset class="f2">
+
+	<h4>Buttons</h4>
+	
+	<input type="button" id="submition" value="Send Info">&nbsp; &nbsp; &nbsp; &nbsp;<input type="reset" id="resetData" value="clear">
+	
+</fieldset>
+</form>
+</body>
+</html>
