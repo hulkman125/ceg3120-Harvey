@@ -8,7 +8,7 @@ RUN PROJECT LOCALLY
 
 1. I simply went to a web browser and typed this in the URL to get me to the neccessary website:
 
-      https://docs.docker.com/desktop/install/windows-install/
+        https://docs.docker.com/desktop/install/windows-install/
 
 I then clicked on the button that says "Docker Desktop for Windows" 
 which then began installing Docker Dessktop on my Laptop.
