@@ -4,7 +4,7 @@
 so they can be displayed on the internet using my personal computer. this can be done using the Docker Desktop software and typing down the right 
 code and Dockerfile(the file that tells Docker how to display your container online)
  
-    RUN PROJECT LOCALLY
+RUN PROJECT LOCALLY
 
 1. I simply went to a web browser and typed this in the URL to get me to the neccessary website:
 
