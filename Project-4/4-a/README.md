@@ -1,4 +1,4 @@
-    CI PROJECT OVERVIEW
+CI PROJECT OVERVIEW
 
 1. My goal for this part of project 4 is to simply create a website using my own chosen resources
 so they can be displayed on the internet using my personal computer. this can be done using the Docker Desktop software and typing down the right 
