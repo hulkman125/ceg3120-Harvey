@@ -53,7 +53,7 @@ I then chose an appropriate name for my repository, mine is called "repo4cobra".
 
 3. I used the latest nginx image by typing down:
 
-    docker tag nginx:latest cobraking1/repo4cobra:latest
+       docker tag nginx:latest cobraking1/repo4cobra:latest
 
  to create a new image container called "dockerking1/repo4cobra" to my Docker software on my PC.
  I then pushed my new container by typing down:
