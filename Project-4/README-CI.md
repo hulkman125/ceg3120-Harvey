@@ -53,12 +53,13 @@ I then chose an appropriate name for my repository, mine is called "repo4cobra".
 
 3. I used the latest nginx image by typing down:
 
-       docker tag nginx:latest cobraking1/repo4cobra:latest
+          docker tag nginx:latest cobraking1/repo4cobra:latest
 
- to create a new image container called "dockerking1/repo4cobra" to my Docker software on my PC.
- I then pushed my new container by typing down:
-    docker push cobraking1/repo4cobra:latest
+   to create a new image container called "dockerking1/repo4cobra" to my Docker software on my PC.
+   I then pushed my new container by typing down:
+   
+          docker push cobraking1/repo4cobra:latest
 
-4. to set a secret on Github, go to settings/Secrets and variables/Actions then click on the "New repository secret" button.  I chose my secrets as Docker_Password to store my Dockerhub password, Docker_Username to store my Dockerhub username, and Docker_Token to set my Dockerhub access token.
+5. to set a secret on Github, go to settings/Secrets and variables/Actions then click on the "New repository secret" button.  I chose my secrets as Docker_Password to store my Dockerhub password, Docker_Username to store my Dockerhub username, and Docker_Token to set my Dockerhub access token.
 
-5. In my yml workflow I called it github-actions-demo.yml. Ther variable called "{{ github.actor}}" represents my username in github. This shows that since the yml file compiled correctly, it should say "hulkman125 is testing out GitHub Actions" once it has been pushed. The steps for this workflow will display outputs depending on the type of step I used. The ones with a run step will display sentances using their own variable in each step. For example, the first step uses a variable of github.event_name which displays what king of event the user uses, in this case I used a push event. This will display the sentance of "The Job was automatically triggered by a push event". The name step will display the phrase "Check out repository code" and then will us the uses command. which will run v4 of the actions/checkout action, which will check your repository onto the runner, which will allow you to run scripts or some other actions. the run step with the "ls" sub-step has a variable name of github.workspace which will display all the files in my current folder in github. 
+6. In my yml workflow I called it github-actions-demo.yml. Ther variable called "{{ github.actor}}" represents my username in github. This shows that since the yml file compiled correctly, it should say "hulkman125 is testing out GitHub Actions" once it has been pushed. The steps for this workflow will display outputs depending on the type of step I used. The ones with a run step will display sentances using their own variable in each step. For example, the first step uses a variable of github.event_name which displays what king of event the user uses, in this case I used a push event. This will display the sentance of "The Job was automatically triggered by a push event". The name step will display the phrase "Check out repository code" and then will us the uses command. which will run v4 of the actions/checkout action, which will check your repository onto the runner, which will allow you to run scripts or some other actions. the run step with the "ls" sub-step has a variable name of github.workspace which will display all the files in my current folder in github. 
