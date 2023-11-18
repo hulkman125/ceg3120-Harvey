@@ -30,7 +30,7 @@ the correct phrase in the URL:
 
           docker run --name CobraComicsWebSite -v /home/hulkman125/cobra/finalFile/:/usr/share/nginx/html:ro -d -p 8080:80 nginx
    this will share my files on my personal pc filepath with the file path on my container, the flags I used are:
-      *read only
+      * read only
       * detached
       * and portbind with my container port of 8080 and a host port of 80.
 
