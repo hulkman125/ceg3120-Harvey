@@ -1,0 +1,30 @@
+.ORIG x3000
+AND R0, R0, #0		; R0 = x0000
+AND R1, R2, #0		; R1 = x0000
+AND R2, R2, #0		; R2 = x0000
+AND R3, R3, #0		; R3 = x0000
+
+LD R0, X			; R0 = 5
+LD R1, Y			; R1 = 3
+ADD R1, R1, #-1		
+LD R2, X			; R2 = 5
+
+MULTIPLY_LOOP
+ADD R3, R3, R0
+ADD R2, R2, #-1
+BRp MULTIPLY_LOOP
+ADD R0, R3, #0		; R0 = R3
+AND R3, R3, #0		; R3 = x0000
+LD R2, X
+ADD R1, R1, #-1
+BRp MULTIPLY_LOOP
+
+ST R0, RESULT
+
+HALT
+
+X .FILL #5
+Y .FILL #3
+RESULT .BLKW #1
+
+.END

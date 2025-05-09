@@ -1,0 +1,176 @@
+.ORIG x3000
+; main's return value
+LD R6, STACK_BOTTOM			; R6 = x6000
+
+;; set global variable pointer
+;LEA R4, GLOBAL_VARS
+
+;; load int w into R0
+;LDR R0, R4, #0
+
+; main's return address (R7)
+ADD R6, R6, #-1				; R6 = x5FFF
+STR R7, R6, #0
+
+; previous frame pointer (R5)
+ADD R6, R6, #-1				; R6 = x5FFE
+STR R5, R6, #0
+
+; setting the current frame pointer
+ADD R5, R6, #0				; R5 = R6 = x5FFE
+
+; save R0
+ADD R6, R6, #-1				; R6 = x5FFD
+STR R0, R6, #0
+
+; save R1
+ADD R6, R6, #-1				; R6 = x5FFC
+STR R1, R6, #0
+
+; int x
+ADD R6, R6, #-1				; R6 = x5FFB
+;AND R0, R0, #0				; R0 = x0000
+;ADD R0, R0, #10			; R0 = #10
+LD R0, INIT_X
+STR R0, R6, #0
+
+; int y
+ADD R6, R6, #-1				; R6 = x5FFA
+AND R0, R0, #0				; R0 = x0000
+ADD R0, R0, #11				; R0 = #10
+;LD R0, INIT_Y
+STR R0, R6, #0
+
+; int val
+ADD R6, R6, #-1				; R6 = x5FF9
+
+; int a
+ADD R6, R6, #-1				; R6 = x5FF8
+LDR R0, R5, #-3				; R0 = int x = #10
+ADD R0, R0, #10				; R0 = x + 10
+STR R0, R6, #0
+
+; int b
+ADD R6, R6, #-1				; R6 = x5FF7
+LDR R0, R5, #-4				; R0 = int y = #11
+STR R0, R6, #0
+
+JSR MAX
+
+; pop max's return value
+LDR R0, R6, #0				; R0 = max's return value
+STR R0, R5, #-5				; R0 = val = max's return value
+ADD R6, R6, #1				; R6 = x5FF7
+
+; pop int b
+ADD R6, R6, #1				; R6 = x5FF8
+
+; pop int a
+ADD R6, R6, #1				; R6 = x5FF9
+
+; return val (R0 = val)
+STR R0, R5, #2
+
+; pop int val
+ADD R6, R6, #1				; R6 = x5FFA
+
+; pop int y
+ADD R6, R6, #1				; R6 = x5FFB
+
+; pop int x
+ADD R6, R6, #1				; R6 = x5FFC
+
+; pop save R1
+LDR R1, R6, #0
+ADD R6, R6, #1				; R6 = x5FFD
+
+; pop save R0
+LDR R0, R6, #0
+ADD R6, R6, #1				; R6 = x5FFE
+
+; pop previous frame pointer
+LDR R5, R6, #0
+ADD R6, R6, #1				; R6 = x5FFF
+
+; pop main's return address
+LDR R7, R6, #0
+ADD R6, R6, #1				; R6 = x6000
+
+HALT
+
+STACK_BOTTOM .FILL x6000
+INIT_X .FILL #10
+INIT_Y .FILL #11
+
+;GLOBAL_VARS
+;INT_W .FILL #3
+
+MAX
+
+; max's return value
+ADD R6, R6, #-1				; R6 = x5FF6
+
+; max's return address
+ADD R6, R6, #-1				; R6 = x5FF5
+STR R7, R6, #0
+
+; prev frame pointer
+ADD R6, R6, #-1				; R6 = x5FF4
+STR R5, R6, #0
+
+; setting current frame pointer
+ADD R5, R6, #0				; R5 = R6 = x5FF4
+
+; save R0
+ADD R6, R6, #-1				; R6 = x5FF3
+STR R0, R6, #0
+
+; save R1
+ADD R6, R6, #-1				; R6 = x5FF2
+STR R1, R6, #0
+
+; int result
+ADD R6, R6, #-1
+LDR R0, R5, #4				; R0 = result = a
+STR R0, R6, #0
+
+; check if(b > a)
+LDR R1, R5, #3				; R1 = b
+NOT R1, R1
+ADD R1, R1, #1				; R1 = -b
+ADD R1, R1, R0				; R1 = a - b
+BRzp RETURN_RESULT
+; inside if statement
+
+; result = b;
+LDR R0, R5, #3				; R0 = b
+STR R0, R5, #-3
+
+RETURN_RESULT
+
+; return result;
+LDR R0, R5, #-3				; R0 = result
+STR R0, R5, #2
+
+; pop int result
+ADD R6, R6, #1				; R6 = x5FF2
+
+; pop save R1
+LDR R1, R6, #0
+ADD R6, R6, #1				; R6 = x5FF3
+
+; pop save R0
+LDR R0, R6, #0
+ADD R6, R6, #1				; R6 = x5FF4
+
+; pop prev frame pointer
+LDR R5, R6, #0				; R5 = x5FFE
+ADD R6, R6, #1				; R6 = x5FF5
+
+; pop max's return address
+LDR R7, R6, #0
+ADD R6, R6, #1				; R6 = x5FF6
+
+RET
+
+.END

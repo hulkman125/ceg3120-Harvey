@@ -1,0 +1,63 @@
+.ORIG x3000
+; main's return value
+LD R6, STACK_BOTTOM			; R6 = x6000
+
+; main's return address (R7)
+ADD R6, R6, #-1				; R6 = x5FFF
+STR R7, R6, #0
+
+; previous frame pointer (R5)
+ADD R6, R6, #-1				; R6 = x5FFE
+STR R5, R6, #0
+
+; setting the current frame pointer
+ADD R5, R6, #0				; R5 = R6 = x5FFE
+
+; save R0
+ADD R6, R6, #-1				; R6 = x5FFD
+STR R0, R6, #0
+
+; save R1
+ADD R6, R6, #-1				; R6 = x5FFC
+STR R1, R6, #0
+
+; int x
+ADD R6, R6, #-1				; R6 = x5FFB
+;AND R0, R0, #0				; R0 = x0000
+;ADD R0, R0, #10			; R0 = #10
+LD R0, INIT_X
+STR R0, R6, #0
+
+; int y
+ADD R6, R6, #-1				; R6 = x5FFA
+AND R0, R0, #0				; R0 = x0000
+ADD R0, R0, #11				; R0 = #10
+;LD R0, INIT_Y
+STR R0, R6, #0
+
+; int val
+ADD R6, R6, #-1				; R6 = x5FF9
+
+; int a
+ADD R6, R6, #-1				; R6 = x5FF8
+LDR R0, R5, #-3				; R0 = int x = #10
+ADD R0, R0, #10				; R0 = x + 10
+STR R0, R6, #0
+
+; int b
+ADD R6, R6, #-1				; R6 = x5FF7
+LDR R0, R5, #-4				; R0 = int y = #11
+STR R0, R6, #0
+
+JSR MAX
+
+HALT
+
+STACK_BOTTOM .FILL x6000
+INIT_X .FILL #10
+INIT_Y .FILL #11
+
+MAX
+RET
+
+.END

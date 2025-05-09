@@ -1,0 +1,9 @@
+.ORIG x3000
+AND R0, R0, #0	; R0 = x0000
+AND R1, R1, #0	; R1 = x0000
+ADD R1, R1, #3	; R1 = x0003
+START
+ADD R0, R0, #5	; R0 = R0 + #5
+ADD R1, R1, #-1	; R1 = R1 - #1
+BRp START
+.END

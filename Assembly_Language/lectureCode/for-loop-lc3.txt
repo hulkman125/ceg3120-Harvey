@@ -1,0 +1,13 @@
+.ORIG x3000
+AND R2, R2, #0		; R2 = i
+START_LOOP
+ADD R1, R2, #-10	; Check if R2 >= 10
+BRzp SKIP_LOOP 		; SKIP_LOOP = x3007
+LEA R0, HI			; Load starting address of "Hello World!" into R0
+PUTS				; Print string found at R0 to the screen
+ADD R2, R2, #1		; i++
+BRnzp START_LOOP	; START_LOOP = x3001
+SKIP_LOOP
+HALT				; Stopping the processor from running
+HI .STRINGZ "Hello World!\n"
+.END

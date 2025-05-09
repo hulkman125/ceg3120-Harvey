@@ -1,0 +1,16 @@
+.ORIG x3000
+AND R2, R2, #0		; R2 = i = 0
+START_LOOP
+LD R1, MAX_VALUE
+ADD R1, R2, R1		; Check if R2 >= MAX_VALUE
+BRzp SKIP_LOOP 		; SKIP_LOOP = x3007
+LEA R0, HI			; Load starting address of "Hello World!" into R0
+PUTS				; Print string found at R0 to the screen
+ADD R2, R2, #1		; i++
+BRnzp START_LOOP	; START_LOOP = x3001
+SKIP_LOOP
+HALT				; Stopping the processor from running
+HI .STRINGZ "Hello World!\n"
+EMPTY_ARRAY .BLKW #10
+MAX_VALUE .FILL #-85
+.END
