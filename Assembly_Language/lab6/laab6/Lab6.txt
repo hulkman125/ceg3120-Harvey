@@ -1,0 +1,678 @@
+; first thing to do is part 1 , implement the trap routines
+
+; Sample Code for Lab 6
+; This sample code implements the int main() function
+
+.ORIG x3000
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; int main()
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Main's return value
+LD R6, STACK_BASE		; R6 = x6000
+
+; Main's return address
+ADD R6, R6, #-1			; R6 = x5FFF
+STR R7, R6, #0
+
+; Previous frame pointer
+ADD R6, R6, #-1			; R6 = x5FFE
+STR R5, R6, #0
+
+; Set frame pointer
+ADD R5, R6, #0			; R5 = R6 = x5FFE
+
+; node_t *head
+ADD R6, R6, #-1			; R6 = x5FFD
+AND R0, R0, #0			; R0 = 0
+STR R0, R6, #0
+
+; char selection
+ADD R6, R6, #-1			; R6 = x5FFC
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; while(selection != 'q')
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Perform the check for the while loop
+; We check to see if char selection is equal to 'q'
+; If equal, quit
+; It not equal, continue running the loop
+CHECK_WHILE
+LDR R0, R5, #-2			; R0 = char selection
+LD R1, LOWERCASE_Q
+NOT R1, R1
+ADD R1, R1, #1
+ADD R1, R0, R1
+BRz BREAK_WHILE_LOOP
+
+
+
+; Print the options menu
+LEA R0, PROMPT_MENU
+PUTS
+
+; Get a character from the keyboard and put it in selection
+; (We don't have to write our own scanf() function)
+GETC
+OUT
+STR R0, R5, #-2			; Store the character on the runtime stack in char selection (R0 = char selection)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; if(selection == 'p')
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Check if char selection is equal to 'p'
+LD R1, LOWERCASE_P
+NOT R1, R1
+ADD R1, R1, #1
+ADD R1, R0, R1
+BRnp ELSE_IF_A			; If not equal to 'p' check 'a'
+
+; Display prompt
+LEA R0, PROMPT_PRINT
+PUTS
+
+; node_t **head (&head) (input to printList()) ; head is the memory address that point to our list(inputed variables)
+ADD R6, R6, #-1			; R6 = x5FFB ; pointer to our list
+ADD R0, R5, #-1			; R0 = &head = x5FFD
+STR R0, R6, #0
+
+JSR PRINT_LIST
+
+; Pop return value (void)
+ADD R6, R6, #1			; R6 = x5FF9
+
+; Pop node_t **head
+ADD R6, R6, #1			; R6 = x5FFB
+
+BRnzp CONTINUE_WHILE_LOOP
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; else if(selection == 'a')
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Check if char selection is equal to 'a'
+ELSE_IF_A
+LD R1, LOWERCASE_A
+NOT R1, R1
+ADD R1, R1, #1
+ADD R1, R0, R1
+BRnp ELSE_IF_R
+
+; int a
+ADD R6, R6, #-1			; R6 = x5FFB
+AND R0, R0, #0
+STR R0, R6, #0
+
+; Display prompt
+LEA R0, PROMPT_ADD
+PUTS
+
+SAVE_R0 .FILL x0000
+; Call TRAP service routine for getting number here
+TRAP x40           ;Calling out input trap service routine
+ST R0, SAVE_R0
+
+
+
+
+;TRAP x41           ;Calling out output trap service routine
+; For testing purposes, let's use 12
+;AND R0, R0, #0			; Comment this out after implementing your TRAP service routine
+;ADD R0, R0, #12			; Comment this out after implementing your TRAP service routine
+
+; Store number entered into int a
+STR R0, R5, #-3
+
+; node_t **head (&head) (input to addValue())
+ADD R6, R6, #-1			; R6 = x5FFA
+ADD R0, R5, #-1			; R0 = &head = x5FFD
+STR R0, R6, #0
+
+; int added (a) (input to addValue())
+ADD R6, R6, #-1			; R6 = x5FF9
+LDR R0, R5, #-3
+STR R0, R6, #0
+
+JSR ADD_VALUE
+; Pop return value (void)
+ADD R6, R6, #1			; R6 = x5FF9
+
+; Pop int added
+ADD R6, R6, #1			; R6 = x5FFA
+
+; Pop node_t **head
+ADD R6, R6, #1			; R6 = x5FFB
+
+; Pop int a
+ADD R6, R6, #1			; R6 = x5FFC
+
+BRnzp CONTINUE_WHILE_LOOP
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; else if(selection == 'r')
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; Check if char selection is equal to 'r'
+ELSE_IF_R
+LD R1, LOWERCASE_R
+NOT R1, R1
+ADD R1, R1, #1
+ADD R1, R0, R1
+BRnp CONTINUE_WHILE_LOOP
+
+; int r
+ADD R6, R6, #-1		; R6 = x5FFB
+AND R0, R0, #0
+STR R0, R6, #0
+
+; Display prompt
+LEA R0, PROMPT_REMOVE
+PUTS
+
+; Call TRAP service routine for getting number here
+		TRAP x40  ; TYLER
+; For testing purposes, let's use 12
+;AND R0, R0, #0			; Comment this out after implementing your TRAP service routine
+;ADD R0, R0, #12			; Comment this out after implementing your TRAP service routine
+
+; Store number entered into int r
+STR R0, R5, #-3
+
+; node_t **head (&head) (input to removeValue())
+ADD R6, R6, #-1			; R6 = x5FFA
+ADD R0, R5, #-1			; R0 = &head = x5FFD
+STR R0, R6, #0
+
+; int removed (r) (input to removeValue())
+ADD R6, R6, #-1			; R6 = x5FF9
+LDR R0, R5, #-3
+STR R0, R6, #0
+
+JSR REMOVE_VALUE
+
+; Pop return value (void)
+ADD R6, R6, #1			; R6 = x5FF9
+
+; Pop int removed
+ADD R6, R6, #1			; R6 = x5FFA
+
+; Pop node_t **head
+ADD R6, R6, #1			; R6 = x5FFB
+
+; Pop int r
+ADD R6, R6, #1			; R6 = x5FFC
+
+BRnzp CONTINUE_WHILE_LOOP
+
+; Loop back to check the while loop condition again
+CONTINUE_WHILE_LOOP
+BRnzp CHECK_WHILE
+
+BREAK_WHILE_LOOP
+
+; Pop local variables in main
+ADD R6, R6, #2			; R6 = x5FFE
+
+; Pop previous frame pointer
+LDR R5, R6, #0
+ADD R6, R6, #1			; R6 = x5FFF
+
+; Pop return address
+LDR R7, R6, #0
+ADD R6, R6, #1			; R6 = x6000
+
+HALT
+
+STACK_BASE .FILL x6000
+
+LOWERCASE_A .FILL x0061
+LOWERCASE_P .FILL x0070
+LOWERCASE_Q .FILL x0071
+LOWERCASE_R .FILL x0072
+LOWERCASE_S .FILL x0073
+
+STORING_STACK_END .FILL #8000
+
+PROMPT_MENU .STRINGz 	"\nAvailable options:\np - Print linked list\na - Add value to linked list\nr - Remove value from linked list\nq - Quit\nChoose an option: "
+PROMPT_PRINT .STRINGz 	"\nContents of the linked list: \n"
+PROMPT_ADD .STRINGz 	"\nType a number to add: \n"
+PROMPT_REMOVE .STRINGz 	"\nType a number to remove: \n"
+printf .STRINGZ " -> "
+
+
+
+; void printList(node_t **head)
+PRINT_LIST;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; printList's return value
+ADD R6, R6, #-1 ; R6 = X5FFA
+
+
+ADD R6, R6, #-1 ; R6 = x5ff9
+;print list return address
+STR R7, R6, #0
+
+ADD R6, R6, #-1 ; R6 = x5ff8
+;previous frame pointer
+STR R5, R6, #0
+
+; setting frame pointer
+ADD R5, R6, #0  ; R5 = R6 = x5ff8
+
+;Save R3
+ADD R6, R6, #-1 ; R6 = x5ff7
+STR R3, R6, #0
+
+;Save R3
+ADD R6, R6, #-1  ; R6 = x5ff6
+STR R2, R6, #0
+
+;Save R1
+ADD R6, R6, #-1  ; R6 = x5ff5
+STR R1, R6, #0
+
+;Save R0
+ADD R6, R6, #-1   ; R6 = x5ff4
+STR R0, R6, #0
+
+; node_t *current
+ADD R6, R6, #-1   ; R6 = x5ff3
+LDR R0, R5, #3  ; R0 = node_t **head or x5ffd
+LDR R0, R0, #0  ; R0 = *head or R0 = X0000
+STR R0, R6, #0 ; storing R0 at x5ff3
+
+AND R3, R3, #0
+
+PRINT_WHILE
+LDR R1, R5, #-5		; R1 = *current
+BRz SKIP_PRINT_WHILE
+; Put while loop code here
+; print the value at the top of our list (which is stored at the address in R0)
+; use trap x41 for printing
+
+LDR R0, R1, #0	 ; R0 = current->value
+;LD R1, LIST
+;LDI R0, R1, R3  ; load the element in the list
+;ADD R3, R3, #1
+
+
+TRAP x41                ;Tyler
+; load the address to the next node into R0
+; this can be done using this instruction:
+LDR R0, R1, #1	; R0 = current->next
+
+; Store R0 into the runtime stack at current node_t *current (use R5 for this)
+STR R0, R5, #-5         ;Tyler
+
+; check if R0 is not equal to 0, if not print " ->"
+ADD R0, R0, #0  ; Tyler
+BRz SKIP_PRINTF ; Tyler
+
+LEA R0, printf  ;Tyler
+PUTS   ;Tyler
+
+SKIP_PRINTF ;Tyler
+BRnzp PRINT_WHILE
+SKIP_PRINT_WHILE
+
+AND R0, R0, #0 
+ADD R0, R0, #10 ;R0 = 10
+OUT ;print new line
+
+
+RETURN_FROM_LIST
+LDR R0, R5, #-5   ; R0 = current = *head = x0000
+
+
+; pop node_t *current
+ADD R6, R6, #1 ; R6 = x5ff4
+;pop R0
+LDR R0, R6, #0
+ADD R6, R6, #1  ; R6 = x5ff5
+
+;pop R1
+LDR R1, R6, #0
+ADD R6, R6, #1  ; R6 = x5ff6
+
+;pop R2
+LDR R2, R6, #0
+ADD R6, R6, #1  ; R6 = x5ff7
+
+;pop R3
+LDR R3, R6, #0
+ADD R6, R6, #1  ; R6 = x5ff8
+
+;pop R5
+LDR R5, R6, #0
+ADD R6, R6, #1  ; R6 = x5ff9
+
+;pop R7
+LDR R7, R6, #0
+ADD R6, R6, #1  ; R6 = x5ffA
+
+RET
+SIZE_OF_LIST .FILL #0
+LIST .FILL x8000
+
+; void addValue(node_t **head, int added)
+ADD_VALUE;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; addValue's return value
+ADD R6, R6, #-1 ; R6 = x5ff8
+
+;add list return address
+ADD R6, R6, #-1 ; R6 = x5ff7
+STR R7, R6, #0
+
+ADD R6, R6, #-1 ; R6 = x5ff6
+;previous frame pointer
+STR R5, R6, #0
+
+; setting frame pointer
+ADD R5, R6, #0  ; R5 = R6 = x5ff6
+
+;Save R3
+ADD R6, R6, #-1 ; R6 = x5ff5
+STR R3, R6, #0
+
+;Save R2
+ADD R6, R6, #-1  ; R6 = x5ff4
+STR R2, R6, #0
+
+;Save R1
+ADD R6, R6, #-1  ; R6 = x5ff3
+STR R1, R6, #0
+
+;Save R0
+ADD R6, R6, #-1   ; R6 = x5ff2
+STR R0, R6, #0
+
+; node_t *current
+ADD R6, R6, #-1   ; R6 = x5ff1
+LDR R0, R5, #4    ; R0 = **head
+LDR R0, R0, #0    ; R0 = *head or R0 = X0000
+STR R0, R6, #0    ; storing R0 at x5ff3
+
+;check to see if current is equal to 0
+BRnp SKIP_CURRENT_0
+;if(current == 0)
+;; adding the input to the end of the list ;; 
+LD R2, SIZE_OF_LIST    ; R2 = 0
+AND R3, R3, #0         ; R3 = 0
+LD R1, LIST            ; R1 = address of list
+;ADD R1, R1, R2			; R1 = address of list + size
+ADD R2, R2, #2          ;R2 = 2
+ST R2, SIZE_OF_LIST    ; size of list = 1
+
+; storing value into list (newNode->value = added;)
+LDR R3, R5, #3      ; R3 = int added
+STR R3, R1, #0
+
+; storing next into list ( newNode->next = 0;   )
+AND R3, R3, #0
+STR R3, R1, #1
+
+; store the new node at the head to point to this location ( *head = newNode;   )
+LDR R0, R5, #4         ; R0 = **head = x5ffd
+STR R1, R0, #0         ; storing R0 at the start of our list
+
+BRnzp RETURN_VOID
+
+SKIP_CURRENT_0
+;implement while_loop
+; (while current != 0)
+WHILE_LOOP_ADD
+LDR R0, R5, #-5   ; R0 = *current
+BRz RETURN_VOID
+
+ADD R0, R0 #1  ;R0 = address of current -> next (or increment R0)
+LDR R0, R0, #0  ; R0 = next
+BRnp SKIP_NEXT_0 ; 
+; check if current-> next == 0
+; add if statement code here
+					LD R2, SIZE_OF_LIST    ; R2 = 0
+					AND R3, R3, #0         ; R3 = 0
+					LD R1, LIST            ; R1 = address of list
+					ADD R1, R1, R2			; R1 = address of list + size
+					ADD R2, R2, #2          ;R2 = 2
+					ST R2, SIZE_OF_LIST    ; size of list = 1
+
+					; storing value into list (newNode->value = added;)
+					LDR R3, R5, #3      ; R3 = int added
+					STR R3, R1, #0
+
+					; storing next into list ( newNode->next = 0;   )
+					AND R3, R3, #0
+					STR R3, R1, #1
+					
+					; current->next = newNode;
+					LDR R0, R5, #-5   ; R0 = *current
+					STR R1, R0, #1	  ; R1 = address of the new node
+
+;this is almost idential to the curent = 0 code
+
+BRnzp RETURN_VOID
+
+SKIP_NEXT_0
+; current = current->next;
+STR R0, R5, #-5
+BRnzp WHILE_LOOP_ADD
+
+
+
+RETURN_VOID
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;                
+
+
+; pop node_t *current
+ADD R6, R6, #1 ; R6 = x5ff2
+
+;pop R0
+LDR R0, R6, #0
+ADD R6, R6, #1  ; R6 = x5ff3
+
+
+
+;pop R1
+LDR R1, R6, #0
+ADD R6, R6, #1  ; R6 = x5ff4
+
+
+
+;pop R2
+LDR R2, R6, #0
+ADD R6, R6, #1  ; R6 = x5ff5
+
+
+
+;pop R3
+LDR R3, R6, #0
+ADD R6, R6, #1  ; R6 = x5ff6
+
+
+
+;pop R5
+LDR R5, R6, #0
+ADD R6, R6, #1  ; R6 = x5ff7
+
+
+
+;pop R7
+LDR R7, R6, #0
+ADD R6, R6, #1  ; R6 = x5ff8
+
+
+RET
+
+; void removeValue(node_t **head, int removed)
+REMOVE_VALUE;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+ADD R6, R6, #-1 ; R6 = x5ff8 ; return vlue
+
+;add listreturn address
+ADD R6, R6, #-1 ; R6 = x5ff7
+STR R7, R6, #0
+
+ADD R6, R6, #-1 ; R6 = x5ff6
+;previous frame pointer
+STR R5, R6, #0
+
+; setting frame pointer
+ADD R5, R6, #0  ; R5 = R6 = x5ff6
+
+;Save R3
+ADD R6, R6, #-1 ; R6 = x5ff5
+STR R3, R6, #0
+
+;Save R2
+ADD R6, R6, #-1  ; R6 = x5ff4
+STR R2, R6, #0
+
+;Save R1
+ADD R6, R6, #-1  ; R6 = x5ff3
+STR R1, R6, #0
+
+;Save R0
+ADD R6, R6, #-1   ; R6 = x5ff2
+STR R0, R6, #0
+
+; node_t *prev
+ADD R6, R6, #-1   ; R6 = x5ff1
+LDR R0, R5, #4    ; R0 = **head
+LDR R0, R0, #0    ; R0 = *head or R0 = X0000
+STR R0, R6, #0    ; storing R0 at x5ff1
+
+;check to see if prev is equal to 0
+BRz RETURN_REMOVED ; if(prev == 0)
+
+LDR R3, R5, #3 ; load R3 to the removed value
+LDR R1, R0, #0 ; load (*head)->value into R1
+NOT R1, R1
+ADD R1, R1, #1 ; make R1 negative
+ADD R1, R1, R3
+
+;if((*head)->value == removed)
+BRnp SKIP_IS_EQUAL ; if the head of the list is not equal to the removed int, otherwise continue
+
+LDR R1, R0, #1 ; load (*head)->next into R1
+LDR R3, R5, #4 ; load **head into R3
+STR R1, R3, #0 ; storing (*head)->next as the head
+BRnzp RETURN_REMOVED
+
+LEA R1, LIST
+LDR R2, R1, #0
+
+NOT R2, R2 ; turning R2 to a negative number
+ADD R2, R2, #1
+
+ADD R2, R2, R3
+
+LEA R1, LIST
+ADD R1, R1, #1
+ADD R0, R1, #0    ;Point the start of our list to the next node in the list (could be NULL)
+
+AND R1, R1, #0                  ;Free up the memory associated with the removed node
+
+BRnzp RETURN_REMOVED
+SKIP_IS_EQUAL
+
+LDR R0, R6, #9 ; R0 = x5FFD = **head Point to the next node in the list if we did not remove anything yet
+LDR R0, R0, #0 ; R0 = x8000 = *head
+LDR R0, R0, #1 ; R0 = x8002 = (*head)->next
+
+; Store node_t *current on runtime stack
+ADD R6, R6, #-1 	; R6 = x5FF0
+STR R0, R6, #0
+
+REMOVE_WHILE
+LDR R0, R5, #-6	; R0 = *current
+BRz POP_CURRENT
+
+; check if current->value == removed
+; if not, skip to the next node
+
+LDR R1, R0, #0	; R1 = current->value
+LDR R2, R5, #3	; R2 = removed
+NOT R2, R2
+ADD R2, R2, #1	; R2 = -removed
+ADD R2, R2, R1	; R2 = current->value - removed
+BRnp SKIP_TO_NEXT_NODE
+
+LDR R0, R5, #-6	; R0 = *current
+LDR R1, R5, #-5 ; R1 = *prev
+LDR R0, R0, #1	; R0 = current->next
+STR R0, R1, #1	; store current->next into prev->next
+BRnzp POP_CURRENT
+
+SKIP_TO_NEXT_NODE
+LDR R0, R5, #-6	; R0 = *current
+STR R0, R5, #-5 ; store current into prev
+LDR R0, R0, #1	; R0 = current->next
+STR R0, R5, #-6	; store current->next into current
+BRnzp REMOVE_WHILE
+
+
+CONTINUE_REMOVE_WHILE_LOOP
+BRz RETURN_REMOVED; while(current != 0)
+AND R4, R4, #0
+NOT R0, R0
+ADD R0, R0, #1
+ADD R4, R1, R3                ;if(current->value == removed)
+
+BRnp SKIP_FIRST_IF
+
+BRnzp RETURN_REMOVED
+SKIP_FIRST_IF
+
+BRnp SKIP_SECOND_IF
+BRnzp RETURN_REMOVED
+SKIP_SECOND_IF
+
+BRnzp CONTINUE_REMOVE_WHILE_LOOP
+POP_CURRENT
+ADD R6, R6, #1	; pop node_t *current
+RETURN_REMOVED
+; pop node_t *current
+ADD R6, R6, #1 ; R6 = x5ff2
+
+;pop R0
+LDR R0, R6, #0
+ADD R6, R6, #1  ; R6 = x5ff3
+
+
+
+;pop R1
+LDR R1, R6, #0
+ADD R6, R6, #1  ; R6 = x5ff4
+
+
+
+;pop R2
+LDR R2, R6, #0
+ADD R6, R6, #1  ; R6 = x5ff5
+
+
+
+;pop R3
+LDR R3, R6, #0
+ADD R6, R6, #1  ; R6 = x5ff6
+
+
+
+;pop R5
+LDR R5, R6, #0
+ADD R6, R6, #1  ; R6 = x5ff7
+
+
+
+;pop R7
+LDR R7, R6, #0
+ADD R6, R6, #1  ; R6 = x5ff8
+
+
+RET
+
+.END
