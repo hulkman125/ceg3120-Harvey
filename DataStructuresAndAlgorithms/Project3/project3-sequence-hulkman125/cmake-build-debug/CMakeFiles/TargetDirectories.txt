@@ -1,4 +1,0 @@
-C:/Users/harve/OneDrive/Desktop/3/project3-sequence-hulkman125/cmake-build-debug/CMakeFiles/SequenceDebug.dir
-C:/Users/harve/OneDrive/Desktop/3/project3-sequence-hulkman125/cmake-build-debug/CMakeFiles/SequenceTestHarness.dir
-C:/Users/harve/OneDrive/Desktop/3/project3-sequence-hulkman125/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/harve/OneDrive/Desktop/3/project3-sequence-hulkman125/cmake-build-debug/CMakeFiles/rebuild_cache.dir
