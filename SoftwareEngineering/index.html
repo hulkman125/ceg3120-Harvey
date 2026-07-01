@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>	
+<title>INDEX</title>
+<style>
+	
+	.carousel {
+        position: relative;
+        width: 80%;
+        max-width: 500px;
+        overflow: hidden;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .carousel-track {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-slide {
+        min-width: 500px;
+        box-sizing: border-box;
+    }
+
+    .carousel-slide img {
+        width: 100%;
+        display: block;
+    }
+
+    /* Navigation buttons */
+    .carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0,0,0,0.5);
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 18px;
+        border-radius: 50%;
+        z-index: 10;
+    }
+
+    .prev { left: 10px; }
+    .next { right: 10px; }
+
+	.border {
+			text-align: center;
+			border: 5px solid #38F527;
+			margin-left: 300px;
+			margin-right: 300px;
+			margin-bottom: 5px;
+
+			}
+	.sec	{
+			border: 3px solid #F54927;
+			text-align: center;
+			margin-left: 400px;
+			margin-right: 400px;
+			margin-bottom: 5px;
+			}
+			
+	header	{
+			font-size: 40px;
+			background-color: #F0B075;
+			padding-top: 5px;
+			padding-bottom: 5px;
+			padding-left: 25px;
+	}
+	
+	footer {
+			background-color: #C47C4F;
+			text-align: center;
+	}
+	
+	body	{
+		background-color: #FFC6A1;
+	}
+	
+	
+	
+	
+</style>
+<meta charset="utf-8">
+<link rel="stylesheet" href="leftMargin.css">
+</head>
+<body>
+
+<input type="checkbox" name="" id="check">
+
+<div class="container">
+	<label for="check">
+		<span class="fas fa-times" id="times"></span>
+		<span class="fas fa-bars" id="bars"></span>
+	</label>
+	<div class="head">Menu</div>
+	<ol>
+		<li><a href="index.html"><i class="fas fa-qrcode">Index</i><a></li>
+		<li><a href="accountPage.html"><i class="fas fa-qrcode">Account Page</i><a></li>		
+		<li><a href="recipecreationPage.html"><i class="fas fa-qrcode">Create Recipe</i><a></li>
+		<li><a href="pantry.html"><i class="fas fa-qrcode">Pantry</i><a></li>
+		<li><a href="foodPage.html"><i class="fas fa-qrcode">Food Page</i><a></li>
+		<li><a href="groceryPage.html"><i class="fas fa-qrcode">Groceries</i><a></li>
+		
+		
+	</ol>
+</div>
+
+
+<header><center>CanCook</center></header><br>
+<p><center><h1>Welcome to CanCook!!!</h1></center></p><br>
+<center>
+<div class="carousel">
+	<button class="carousel-btn prev">&#10094;</button>
+		<div class="carousel-track">
+			<div class="carousel-slide"><img src="hamburger.jpeg" alt="Slide 1" width="500" height="500"></div>
+			<div class="carousel-slide"><img src="freanchToast.jpg" alt="Slide 2" width="500" height="500"></div>
+			<div class="carousel-slide"><img src="BananaSmoothie.jpg" alt="Slide 3" width="500" height="500"></div>
+			<div class="carousel-slide"><img src="gingerbread.jpg" alt="Slide 4" width="500" height="500"></div>
+		</div>
+	<button class="carousel-btn next">&#10095;</button>
+</div>
+</center>
+<script>
+    const track = document.querySelector('.carousel-track');
+    const slides = Array.from(track.children);
+    const prevButton = document.querySelector('.prev');
+    const nextButton = document.querySelector('.next');
+
+    let currentIndex = 0;
+
+    function updateCarousel() {
+        track.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+
+    nextButton.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % slides.length; // Loop forward
+        updateCarousel();
+    });
+
+    prevButton.addEventListener('click', () => {son
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length; // Loop backward
+        updateCarousel();
+    });
+
+    // Optional: Auto-play every 3 seconds
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % slides.length;
+        updateCarousel();
+    }, 3000);
+</script>
+
+<main>
+
+
+</main>
+<footer>
+<h3>Team CanCook</h3>
+<h2>Tyler, Adam, Amol, Piush</h2>
+<small>Written by <br> Tyler Harvey<small>
+</footer>
+</body>
+</html>
+
