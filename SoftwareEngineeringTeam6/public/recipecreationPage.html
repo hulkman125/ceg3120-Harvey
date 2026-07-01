@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>	
+<title>INDEX</title>
+<style>
+	 main{
+			padding: 20px;
+}
+	.border {
+			text-align: center;
+			border: 5px solid #38F527;
+			margin-left: 300px;
+			margin-right: 300px;
+			margin-bottom: 5px;
+
+			}
+	.sec	{
+			border: 3px solid #F54927;
+			text-align: center;
+			margin-left: 400px;
+			margin-right: 400px;
+			margin-bottom: 5px;
+			}
+			
+	header	{
+			font-size: 40px;
+			background-color: #F0B075;
+			padding-top: 5px;
+			padding-bottom: 5px;
+			padding-left: 25px;
+	}
+	
+	footer {
+			background-color: #C47C4F;
+			text-align: center;
+	}
+	
+	body	{
+		background-color: #FFC6A1;
+	}
+	
+		
+	.rightside{
+		float: right;
+	}
+	
+	.leftside{
+		float: left;
+		padding-left: 60px;
+	}
+	
+	.DL{
+		float: left;
+	}
+	.DR{
+		float: right;
+	}
+	.UR{
+		float: left;
+		font-weight: 100;
+	}
+	
+	.textarea-container {
+		display: flex;
+	}
+
+	nav {
+		float: right;
+	}
+	
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+	$(document).ready(function() {	
+		const username = localStorage.getItem("username");
+
+if (username) {
+    document.getElementById("username").textContent = "Username: " + username;
+    window.currentUser = username;
+} else {
+    window.location.href = "index.html"; // not logged in
+}
+
+		
+
+		const headingElement = document.getElementById("username");
+		document.getElementById("username").textContent = "Username:  " + username + "";
+		window.currentUser = username;
+
+		let selectedFile = null;
+
+// switch between file and URL
+$("#imageSource").change(function () {
+    const mode = $(this).val();
+
+    if (mode === "file") {
+        $("#fileUploadSection").show();
+        $("#urlSection").hide();
+    } else {
+        $("#fileUploadSection").hide();
+        $("#urlSection").show();
+    }
+});
+
+// file picker
+$("#dropZone").click(function () {
+    $("#imageFile").click();
+});
+
+$("#imageFile").change(function (e) {
+    selectedFile = e.target.files[0];
+});
+
+$("#signout").click(function(e){
+			e.preventDefault();
+			window.location.href = "index.html";
+		});
+
+// drag/drop support
+$("#dropZone").on("dragover", function (e) {
+    e.preventDefault();
+});
+
+$("#dropZone").on("drop", function (e) {
+    e.preventDefault();
+    selectedFile = e.originalEvent.dataTransfer.files[0];
+});
+
+
+
+
+
+		$("#index").click(function(e){
+			e.preventDefault(); 
+			window.location.href = "index.html";
+		});
+		$("#accountPage").click(function(e){
+			e.preventDefault(); 
+			window.location.href = "accountPage.html?username=" + encodeURIComponent(window.currentUser);
+		});
+		$("#createRecipe").click(function(e){
+			e.preventDefault(); 
+			window.location.href = "recipecreationPage.html?username=" + encodeURIComponent(window.currentUser);
+		});
+		$("#pantryPage").click(function(e){
+			e.preventDefault(); 
+			window.location.href = "pantry.html?username=" + encodeURIComponent(window.currentUser);
+		});
+		$("#foodPage").click(function(e){
+			e.preventDefault(); 
+			window.location.href = "recipecreationPage.html?username=" + encodeURIComponent(window.currentUser);
+		});
+		$("#groceriesPage").click(function(e){
+			e.preventDefault(); 
+			window.location.href = "groceryPage.html?username=" + encodeURIComponent(window.currentUser);
+		});	
+		//$("#username").text(username);
+		$("#SubmitRecipe").click(function (e) {
+    e.preventDefault();
+
+    console.log("BUTTON CLICKED");
+
+    const formData = new FormData();
+
+    formData.append("title", $("#title").val());
+    formData.append("username", localStorage.getItem("username"));
+    formData.append("description", $("#Desc").val());
+    formData.append("visibility", $("input[name='Visibility']:checked").val());
+    formData.append("servingSize", $("#ServingSize").val());
+    formData.append("prepTime", $("#PrepTime").val());
+    formData.append("cookTime", $("#CookTime").val());
+    formData.append("instructions", $("#tx").val());
+
+    // ✅ THIS IS THE IMPORTANT LINE
+    const ingredients = $("#IN").val();
+    console.log("INGREDIENTS FROM INPUT:", ingredients);
+
+    formData.append("ingredients", ingredients);
+
+    const imageSource = $("#imageSource").val();
+
+    if (imageSource === "file" && selectedFile) {
+        formData.append("image", selectedFile);
+    }
+
+    if (imageSource === "url") {
+        formData.append("imageUrl", $("#imageURL").val());
+    }
+		console.log("FINAL FORM DATA INGREDIENTS:", formData.get("ingredients"));
+    $.ajax({
+    url: "http://localhost:3004/recipes",
+    type: "POST",
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function(res) {
+        console.log("SUCCESS:", res);
+    },
+    error: function(err) {
+        console.log("ERROR:", err.responseText);
+    }
+});
+
+	});
+});
+</script>
+
+
+<meta charset="utf-8">
+<link rel="stylesheet" href="leftMargin.css">
+<script src="scriptrecipecreationPage.js"></script>
+</head>
+<body>
+
+<input type="checkbox" name="" id="check">
+
+<div class="container">
+	<label for="check">
+		<span class="fas fa-times" id="times"></span>
+		<span class="fas fa-bars" id="bars"></span>
+	</label>
+	<div class="head">Menu</div>
+	<ol>
+		<li><a href="index.html"><i class="fas fa-qrcode">Index</i><a></li>
+		<li><a href="accountPage.html"><i class="fas fa-qrcode">Account Page</i><a></li>		
+		<li><a href="recipecreationPage.html"><i class="fas fa-qrcode">Create Recipe</i><a></li>
+		<li><a href="pantry.html"><i class="fas fa-qrcode">Pantry</i><a></li>
+		<li><a href="foodPage.html"><i class="fas fa-qrcode">Food Page</i><a></li>
+		<li><a href="groceryPage.html"><i class="fas fa-qrcode">Groceries</i><a></li>
+		
+		
+	</ol>
+</div>
+<form action="/action_page.php" method="post">
+<header><center>CanCook</center></header> <div id="username" class="UR">UserName: </div>
+<nav>Home Recipes</nav><br>
+<nav class="headerpart2"><button id = "signout">Sign Out</button></nav>
+<p><center><h1>Recipe Creation</h1></center></p><br><br>
+
+<h6 id="userID"></h6>
+
+<center>
+
+	<label>Title of Recipe:   </label><input type="text" class="text" name="fieldName" id="title">
+	<br><br>
+
+	<label>Description:   </label><input type="text" class="text" name="fieldName" id="Desc">
+<br><br>
+
+<input type="radio" name="Visibility" value="public" checked> Public
+<input type="radio" name="Visibility" value="private"> Private
+
+</label><br><br>
+
+
+<label>Instructions: </label><br>
+<textarea rows="20" cols="40" id="tx"></textarea><br><br>
+
+<label>ingrediants: </label><br>
+<textarea rows="20" cols="40" id="IN"></textarea><br><br>
+
+<label>Recipe Image</label>
+
+<select id="imageSource">
+  <option value="file">Upload from device</option>
+  <option value="url">Use image URL</option>
+</select>
+
+<br><br>
+
+<!-- File upload zone -->
+<div id="fileUploadSection">
+  <div id="dropZone" style="
+      width: 300px;
+      height: 150px;
+      border: 2px dashed #666;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+  ">
+    Drag & Drop Image or Click
+  </div>
+  <input type="file" id="imageFile" accept="image/*" style="display:none;">
+</div>
+
+<!-- URL input -->
+<div id="urlSection" style="display:none;">
+  <input type="text" id="imageURL" placeholder="Paste image URL here" style="width:300px;">
+</div>
+
+
+
+
+<label>
+Quantity: 
+<input type="number" id="Quantity" placeholder="First number" step="1"> 
+</label><br><br>
+
+
+
+
+<label>
+Serving Size:
+<input type="number" id="ServingSize" placeholder="First number" step="1"> 
+</label><br><br>
+
+
+<label>
+Prep Time in Minutes:
+<input type="number" id="PrepTime" placeholder="First number" step="1"> 
+</label><br><br>
+
+<label>
+Cooking Time in Minutes:
+<input type="number" id="CookTime" placeholder="First number" step="1"> 
+</label><br><br>
+
+<button id="SubmitRecipe" type="button">Submit Recipe</button>
+
+</center>
+
+</form>
+</main>
+
+
+
+<footer></footer>
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>	
+<title>INDEX</title>
+<style>
+	.border {
+			text-align: center;
+			border: 5px solid #38F527;
+			margin-left: 300px;
+			margin-right: 300px;
+			margin-bottom: 5px;
+
+			}
+	.sec	{
+			border: 3px solid #F54927;
+			text-align: center;
+			margin-left: 400px;
+			margin-right: 400px;
+			margin-bottom: 5px;
+			}
+			
+	header	{
+			font-size: 40px;
+			background-color: #F0B075;
+			padding-top: 5px;
+			padding-bottom: 5px;
+			padding-left: 25px;
+	}
+	
+	footer {
+			background-color: #C47C4F;
+			text-align: center;
+	}
+	
+	body	{
+		background-color: #FFC6A1;
+	}
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+	$(document).ready(function(){
+
+    $("#btn").click(function(e){
+        e.preventDefault();
+
+        const username = $("#UN").val().trim();
+        const role = $("#RL").val();
+        const password = $("#PW").val();
+        const repassword = $("#RPW").val();
+
+        if(!username || !role || !password || !repassword){
+            alert("Please fill out all fields");
+            return;
+        }
+
+        if(password !== repassword){
+            alert("Passwords do not match");
+            return;
+        }
+
+        const allowedRoles = ["user", "administrator", "grocery_admin"];
+        const normalizedRole = role.trim().toLowerCase();
+
+        if (!allowedRoles.includes(normalizedRole)) {
+            alert("Invalid role. Must be user, administrator, or grocery_admin");
+            return;
+        }
+
+		const usernameRegex = /^[a-z]{8}$/;
+
+const passwordRegex =
+/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{12,}$/;
+
+// USERNAME RULE
+if (!usernameRegex.test(username)) {
+	alert("Username must be exactly 8 lowercase letters");
+			return;
+		}
+
+// PASSWORD RULE
+if (!passwordRegex.test(password)) {
+    alert("Password must be at least 12 characters and include uppercase, lowercase, number, and symbol");
+		return;
+}
+
+        $.ajax({
+            url: 'http://localhost:3001/signup',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                username: username,
+                role: normalizedRole,
+                password: password
+            }),
+            success: function(response){
+                const username = $("#UN").val().trim();
+
+				//overwrite any previous username that was used earlier
+    			localStorage.setItem("username", username);
+				window.location.href = "groceryPage.html";
+            },
+            error: function(xhr){
+    const msg = xhr.responseJSON?.message || "Signup failed";
+    			alert(msg);
+			}
+        });
+    });
+});
+
+
+</script>
+
+
+<script>
+</script>
+
+<meta charset="utf-8">
+<link rel="stylesheet" href="leftMargin.css">
+</head>
+<body>
+
+<input type="checkbox" name="" id="check">
+
+
+
+
+<header><center>CanCook</center></header>
+<p><center>Welcome to CanCook!!!</center></p>
+
+<div class="border">
+	<form id="signupForm">
+	<label for="username">Username:  </label> <br>
+	<input type="text" class="text" name="fieldName" placeholder="Enter Username" id="UN"><br><br>
+	
+	<label for="role">Role:  </label> <br>
+	<select id="RL">
+	<option value="user">User</option>
+	<option value="administrator">Administrator</option>
+	<option value="grocery_admin">Grocery Admin</option>
+	</select><br><br>
+	
+	<!-- <label for="lastname">Last Name:  </label> <br>
+	<input type="text" class="text" name="fieldName" placeholder="Enter Last Name" id="LN"><br><br>
+
+	<label for="lastname">Date of Birth:  </label> <br>
+	<input type="date" id="birthday" name="birthday" required><br><br> -->
+	
+	<!-- <label for="Bio">Bio:  </label> <br>
+	<textarea id="bio" maxlength="650" style="min-height: 100px;" id="BI"></textarea><br><br>
+	 -->
+	<!-- <label for="Email">Email:  </label> <br>
+	<input type="email"  name="fieldName" placeholder="Email" id="EM"><br><br>
+	 -->
+	<label for="password">Password:  </label> <br>
+	<input type="password"  name="fieldName" placeholder="Password" id="PW"><br><br>
+
+
+	<label for="password">Re-Enter Password:  </label> <br>
+	<input type="password"  name="fieldName" placeholder="Email" id="RPW"><br><br><br>
+	
+	<button type="button" id="btn">Submit</button>
+	<br>
+	</form>
+</div>
+	<div class="sec">
+	
+	<h6>Already have an account?</h6>
+	<a href="Auth.html"><h6>Login</h6></a>
+	</div>
+
+
+
+<main>
+
+
+</main>
+<footer>
+<h3>Team CanCook</h3>
+<h2>Tyler, Adam, Amol, Piush</h2>
+<small>Written by <br> Tyler Harvey<small>
+</footer>
+</body>
+</html>
+

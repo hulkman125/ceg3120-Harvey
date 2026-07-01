@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>	
+<title>INDEX</title>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="buttons.js"></script>
+<meta charset="utf-8">
+<link rel="stylesheet" href="leftMargin.css">
+<style>
+header	{
+			font-size: 40px;
+			background-color: #F0B075;
+			padding-top: 5px;
+			padding-bottom: 5px;
+			padding-left: 25px;
+	}
+
+main {
+	text-align: center;
+}
+
+header button {
+			float: right;
+			padding: 3px;
+			margin-left: 5px;
+			margin-right: 5px;
+			}
+
+body	{
+		background-color: #FFC6A1;
+		
+	}
+
+main {
+		margin-left: 300px;
+			margin-right: 300px;
+			margin-bottom: 5px;
+}
+	
+ul a{
+		margin-left: 230px;
+		margin-right: 230px;
+		margin-bottom: 5px;
+		
+}
+	
+	
+.border {
+		border-bottom: 6px solid green;
+		font-size: 25px;
+}
+
+.text {
+	float: right;
+}
+		
+</style>
+<script>
+    //frontend sever
+	$(document).ready(function() {	
+
+		const params = new URLSearchParams(window.location.search);
+		const username = localStorage.getItem("username");
+
+	if (username) {
+		document.getElementById("username").textContent = "Username: " + username;
+		window.currentUser = username;
+	} else {
+		window.location.href = "index.html"; // not logged in
+	}
+
+
+		const headingElement = document.getElementById("username");
+		document.getElementById("username").textContent = "Username:  " + username + "";
+		window.currentUser = username;
+
+       const recipeTitle = new URLSearchParams(window.location.search).get("title");
+
+if (recipeTitle) {
+    console.log("Recipe title sent:", recipeTitle);
+    console.log("Recipe title from URL:", recipeTitle);
+  $.ajax({
+  url: `http://localhost:3003/api/recipe/title/${encodeURIComponent(recipeTitle)}`,
+  method: 'GET',
+  success: function(data) {
+    console.log("SUCCESS DATA:", data);
+
+    $("#titleplacement").text(data.title);
+    $("#description").text(data.description);
+    $("#ingrediants").text(data.ingrediants);
+    $("#recipeSteps").text(data.instructions);
+
+    $("#imageplacement").html(
+      `<img src="${data.image_url}" width="400">`
+    );
+  },
+  error: function(xhr) {
+    console.log("STATUS:", xhr.status);
+    console.log("RESPONSE TEXT:", xhr.responseText);
+    console.log("XHR OBJECT:", xhr);
+
+    alert("Failed: " + xhr.status);
+  }
+});
+
+    }
+    
+
+
+		$("#index").click(function(e){
+			e.preventDefault(); 
+			window.location.href = "index.html";
+		});
+		$("#accountPage").click(function(e){
+			e.preventDefault(); 
+			window.location.href = "accountPage.html?username=" + encodeURIComponent(usernameB);
+		});
+		$("#createRecipe").click(function(e){
+			e.preventDefault(); 
+			window.location.href = "recipecreationPage.html?username=" + encodeURIComponent(usernameB);
+		});
+		$("#pantryPage").click(function(e){
+			e.preventDefault(); 
+			window.location.href = "pantry.html?username=" + encodeURIComponent(username);
+		});
+		$("#foodPage").click(function(e){
+			e.preventDefault(); 
+			window.location.href = "recipecreationPage.html?username=" + encodeURIComponent(username);
+		});
+		$("#groceriesPage").click(function(e){
+			e.preventDefault(); 
+			window.location.href = "groceryPage.html?username=" + encodeURIComponent(username);
+		
+		});	
+		$("#goButton").click(function(e){
+			e.preventDefault(); 
+			window.location.href = "SignUp.html";
+		});
+		$("#loginButton").click(function(e){
+			e.preventDefault(); 
+			window.location.href = "Auth.html";
+		});
+	});
+</script>
+<meta charset="utf-8">
+
+</head>
+<body>
+
+<input type="checkbox" name="" id="check">
+
+<div class="container">
+	<label for="check">
+		<span class="fas fa-times" id="times"></span>
+		<span class="fas fa-bars" id="bars"></span>
+	</label>
+	<div class="head">Menu</div>
+	<ol>
+		<li id = "index"><a><i class="fas fa-qrcode">Index</i><a></li>
+		<li id = "accountPage"><a><i class="fas fa-qrcode">Account Page</i><a></li>		
+		<li id = "createRecipe"><a><i class="fas fa-qrcode">Create Recipe</i><a></li>
+		<li id = "pantryPage"><a><i class="fas fa-qrcode">Pantry</i><a></li>
+		<li id = "foodPage"><a><i class="fas fa-qrcode">Food Page</i><a></li>
+		<li id = "groceriesPage"><a><i class="fas fa-qrcode">Groceries</i><a></li>
+	</ol>
+</div>
+<header>&nbsp&nbsp&nbsp&nbsp CanCook&nbsp&nbsp<button id = "loginButton">Log In</button>&nbsp&nbsp<button id="goButton">Sign In</button>
+<button>Search</button><input type="text" class="text" name="fieldName" placeholder="Enter details"></header>
+<div id="username" class="UR">UserName: </div>
+<main>
+<h1 id="titleplacement"></h1><br>
+<div id="imageplacement"></div>
+
+<h3 class="border">Description</h3><br>
+<div id="description"></div>
+
+
+
+	
+
+
+<h3 class="border">Recipe Steps</h3><br>
+<div id="recipeSteps"></div>
+
+<br><br>
+<label>Add Comments:</label><br>
+<textarea rows="20" cols="40" readonly></textarea>
+
+<h3 class="border">About the Author</h3><br>
+<Strong>Tyler Raymond Harvey</Strong><br><br>
+Student at Wright state University
+</main>
+<footer class="F"><small>Written by <br> Tyler Harvey<small></footer>
+</body>
+</html>
+

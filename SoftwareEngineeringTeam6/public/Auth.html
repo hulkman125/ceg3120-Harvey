@@ -1,0 +1,90 @@
+<!--to include JQuery -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="leftMargin.css">
+<title>Authentication</title>
+<style>
+
+	body {text-align: center;
+	      font-size: 40px;}
+    
+	header {
+			background-color: #F0B075;
+	}
+</style>
+<!--to include JQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script> //  the front end script for authentication page, it will send the login request to the backend and handle the response
+$(document).ready(function() {	
+	$("#submition").click(function(e){
+		e.preventDefault(); 
+		var username = $("#username_input").val();
+		var password = $("#password_input").val();
+
+		if (!username || !password) {
+  			alert("Missing username and/or password");
+    		return;
+		}
+		
+		
+			//send the Login request to the backend
+		$.ajax({
+			url: '/login',
+			type: 'POST',
+			contentType: 'application/json',
+			data: JSON.stringify({username: username, password: password}),
+			success: function(response){
+				 localStorage.setItem("username", username);
+
+    		// ✅ Redirect WITHOUT passing username in URL
+    		window.location.href = "groceryPage.html";
+			},
+			error: function(xhr){
+				if(xhr.responseJSON && xhr.responseJSON.message){
+					alert(xhr.responseJSON.message);
+				} else {
+					alert("An error occurred during login");
+				}
+			}
+		});	
+	});
+});
+
+
+</script>
+
+
+<link rel="stylesheet" href="leftMargin.css">
+
+</head>
+<body style="background-color: #FFC6A1">
+
+<input type="checkbox" name="" id="check">
+
+
+<header>AUTHENTICATION!!!!!!</header><br>
+
+	<div >
+	<h6>Please Enter username and password</h6><br>
+	
+	
+
+	
+	<label for="username_label"><small>username</small> </label>
+		<input type="text" id="username_input" name="user_name" >		<span>&nbsp;</span><br>
+	
+	<label for="password_label"><small>password:</small></label>
+		<input type="password" id="password_input" name="password">		<span>&nbsp;</span><br>
+		
+		<input type="button" id="submition" value="Submit">
+
+
+	</div>
+	
+
+
+	
+</body>
+</html>
